@@ -40,7 +40,7 @@ app.get('/articles', (request, response) => {
   //  This line of code corresponds to the number 3
   //  It affects the Article.fetchAll function inside the article.js
   // This is READING part of CRUD
-  client.query('SELECT FROM *')
+  client.query('SELECT * FROM articles')
     .then(function(result) {
       response.send(result.rows);
     })
@@ -114,7 +114,7 @@ app.delete('/articles', (request, response) => {
   // This is interacting with the with the truncateTable method
   // This is the DELETE part of CRUD
   client.query(
-    'DELETE FROM articles *'
+    'DELETE * FROM articles'
   )
     .then(() => {
       response.send('Delete complete')
@@ -137,7 +137,9 @@ app.listen(PORT, () => {
 ////////////////////////////////////////
 function loadArticles() {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
-  // PUT YOUR RESPONSE HERE
+  // This function corresponds to # 3 of full-stack-diagram.
+  // This is not interacting with any functions in the article.js
+  // Update part of CRUD
   client.query('SELECT COUNT(*) FROM articles')
     .then(result => {
     // REVIEW: result.rows is an array of objects that PostgreSQL returns as a response to a query.
