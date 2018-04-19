@@ -38,13 +38,11 @@ app.get('/new', (request, response) => {
 app.get('/articles', (request, response) => {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
   //  This line of code corresponds to the number 3
-  //It doesn't affect any part of of article.js
+  //  It affects the Article.fetchAll function inside the article.js
   // This is READING part of CRUD
-  client.query('2')
+  client.query('SELECT FROM *')
     .then(function(result) {
-      console.log('this is what I wanted.');
       response.send(result.rows);
-      console.log(result.rows, ' not broken');
     })
     .catch(function(err) {
       console.error(err)
@@ -84,9 +82,7 @@ app.put('/articles/:id', (request, response) => {
   // This line of code corresponds to 2 and 3
   // This is interacting with the with the updateRecord method
   // This is the UPDATE part of CRUD
-  client.query(
-    ` `, []
-  )
+  client.query(`UPDATE articles WHERE articles_id=$1; `,[request.param.id])
     .then(() => {
       response.send('update complete')
     })
@@ -118,7 +114,7 @@ app.delete('/articles', (request, response) => {
   // This is interacting with the with the truncateTable method
   // This is the DELETE part of CRUD
   client.query(
-    'DELETE FROM articles'
+    'DELETE FROM articles *'
   )
     .then(() => {
       response.send('Delete complete')
