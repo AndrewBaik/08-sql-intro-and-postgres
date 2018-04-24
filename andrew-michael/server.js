@@ -82,7 +82,13 @@ app.put('/articles/:id', (request, response) => {
   // This line of code corresponds to 2 and 3
   // This is interacting with the with the updateRecord method
   // This is the UPDATE part of CRUD
-  client.query(`UPDATE articles WHERE articles_id=$1; `,[request.param.id])
+  client.query(`UPDATE articles SET author_id=$1, title=$2, category=$3, "publishedOn"=$4, body=$5 WHERE articles_id=$6; `,
+    [ request.body.author_id,
+      request.body.title,
+      request.body.category,
+      request.body.publishedOn,
+      request.body.body,
+      request.body.id])
     .then(() => {
       response.send('update complete')
     })
@@ -114,7 +120,7 @@ app.delete('/articles', (request, response) => {
   // This is interacting with the with the truncateTable method
   // This is the DELETE part of CRUD
   client.query(
-    'DELETE * FROM articles'
+    'DELETE FROM articles'
   )
     .then(() => {
       response.send('Delete complete')
